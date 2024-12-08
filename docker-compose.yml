@@ -1,9 +1,7 @@
 services:
-  proyecto-microservicio:
-    container_name: proyecto-microservicio
-    image: juanzapata1241/gestion-proyectos-microservicio
-    build:
-      context: .
+  monolith:
+    image: juanzapata1241/gestion-proyectos-monolito
+    container_name: proyectos-monolito
     ports:
       - "3000:3000"
     environment:
@@ -11,15 +9,25 @@ services:
     networks:
       - proyecto-network
 
-  proyecto-microservice-2:
-    container_name: proyecto-microservice-2
+  proyecto-microservice-1:
+    container_name: proyecto-microservice-1
     image: juanzapata1241/gestion-proyectos-microservicio
-    build:
-      context: .
     ports:
       - "3001:3001"
     environment:
       - MONGO_URI=${MONGO_URI}
+      - PORT=3001
+    networks:
+      - proyecto-network
+
+  proyecto-microservice-2:
+    container_name: proyecto-microservice-2
+    image: juanzapata1241/gestion-proyectos-microservicio
+    ports:
+      - "3002:3001"
+    environment:
+      - MONGO_URI=${MONGO_URI}
+      - PORT=3002
     networks:
       - proyecto-network
 

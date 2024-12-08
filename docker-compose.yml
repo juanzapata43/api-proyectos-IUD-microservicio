@@ -1,0 +1,37 @@
+services:
+  proyecto-microservicio:
+    container_name: proyecto-microservicio
+    image: juanzapata1241/gestion-proyectos-microservicio
+    build:
+      context: .
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGO_URI=${MONGO_URI}
+    networks:
+      - proyecto-network
+
+  proyecto-microservice-2:
+    container_name: proyecto-microservice-2
+    image: juanzapata1241/gestion-proyectos-microservicio
+    build:
+      context: .
+    ports:
+      - "3001:3001"
+    environment:
+      - MONGO_URI=${MONGO_URI}
+    networks:
+      - proyecto-network
+
+  load-balancer:
+    container_name: load-balancer
+    image: load-balancer:v1
+    build:
+      context: ./balancer
+    ports:
+      - "5000:80"
+    networks:
+      - proyecto-network
+
+networks:
+  proyecto-network:
